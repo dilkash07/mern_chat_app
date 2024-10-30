@@ -2,9 +2,18 @@ const mongoose = require("mongoose");
 
 const messageSchema = new mongoose.Schema(
   {
-    text: String,
-    image_url: String,
-    video_url: String,
+    text: {
+      type: String,
+      default: "",
+    },
+    image_url: {
+      type: String,
+      default: "",
+    },
+    video_url: {
+      type: String,
+      default: "",
+    },
     seen: {
       type: Boolean,
       default: false,
