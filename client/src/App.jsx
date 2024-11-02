@@ -20,7 +20,7 @@ function App() {
         <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route path="*" element={<Error />} />
       </Routes>
-    </div>
+    </div>      
   );
 }
 

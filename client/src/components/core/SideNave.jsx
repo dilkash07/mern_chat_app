@@ -7,7 +7,6 @@ import { useSelector } from "react-redux";
 
 const SideNave = () => {
   const { user } = useSelector((state) => state.user);
-  console.log(user);
 
   return (
     <div className="px-2 py-4 flex flex-col justify-between">

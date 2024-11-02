@@ -4,10 +4,8 @@ import { LiaSearchSolid } from "react-icons/lia";
 import Card from "./Card";
 
 const Users = () => {
-  const { users, user } = useSelector((state) => state.user);
+  const { users } = useSelector((state) => state.user);
 
-  console.log("this is users hai ji : ", users);
-  console.log("this is user hai ji : ", user);
   return (
     <div className="h-full w-full md:max-w-max flex flex-col gap-2 px-2 py-3 bg-white rounded-ss-lg border-r">
       <h1 className="font-bold mb-2">Chats</h1>

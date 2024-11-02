@@ -11,3 +11,9 @@ export const userEndPoints = {
   GET_USERS_API: baseUrl + "/user/get-users",
   GET_USER_PROFILE_API: baseUrl + "/user/get-user-profile",
 };
+
+// MESSAGE ENDPOINTS
+export const messageEndpoints = {
+  GET_MESSAGES_API: baseUrl + "/message/get-message/",
+  SEND_MESSAGES_API: baseUrl + "/message/send-message/",
+};

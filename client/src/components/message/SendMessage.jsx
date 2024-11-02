@@ -1,17 +1,23 @@
 import React, { useState } from "react";
 import { GrAttachment } from "react-icons/gr";
 import { LuSendHorizonal } from "react-icons/lu";
+import { useDispatch, useSelector } from "react-redux";
+import { sendMessage } from "../../services/operations/MessageAPI";
 
 const SendMessage = () => {
+  const dispatch = useDispatch();
+  const { token } = useSelector((state) => state.auth);
+  const { receiver } = useSelector((state) => state.message);
   const [message, setMessage] = useState("");
 
   const changeHandler = (event) => {
     setMessage(event.target.value);
   };
+
   const submitHandler = (event) => {
     event.preventDefault();
 
-    console.log(message);
+    dispatch(sendMessage(message, receiver._id, token));
 
     setMessage("");
   };
