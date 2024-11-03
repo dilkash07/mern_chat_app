@@ -27,6 +27,10 @@ const userSchema = new mongoose.Schema(
       image_url: String,
       public_id: String,
     },
+    lastSeen: {
+      type: Date,
+      default: Date.now(),
+    },
   },
   { timestamps: true }
 );

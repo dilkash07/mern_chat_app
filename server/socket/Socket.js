@@ -2,6 +2,7 @@ const express = require("express");
 const { Server } = require("socket.io");
 const http = require("http");
 require("dotenv").config();
+const User = require("../models/User");
 
 const app = express();
 const server = http.createServer(app);
@@ -13,9 +14,14 @@ const io = new Server(server, {
 });
 
 const users = {};
+const currentPage = {};
 
-const getReceiverSocket = (reciever) => {
-  return users[reciever];
+const getReceiverSocket = (receiver) => {
+  return users[receiver];
+};
+
+const getCurrentPage = (receiver) => {
+  return currentPage[receiver];
 };
 
 io.on("connection", (socket) => {
@@ -24,26 +30,37 @@ io.on("connection", (socket) => {
   users[userId] = socket.id;
 
   console.log("online user: ", users);
-  // used to send the events to all connected users
+
   io.emit("onlineUsers", Object.keys(users));
 
-  // socket.on("send_message", (data) => {
-  //   io.to(data.receiverId).emit("receive_message", data);
-  // });
+  socket.on("typing", ({ id, isTyping }) => {
+    const receiver = users[id];
+
+    if (receiver) {
+      io.to(receiver).emit("isTyping", isTyping);
+    }
+  });
+
+  socket.on("leavePage", ({ sender }) => {
+    delete currentPage[sender];
+    // console.log("leave: : ", currentPage);
+  });
+
+  socket.on("enterPage", ({ sender, receiver }) => {
+    currentPage[sender] = receiver;
+    // console.log("current: : ", currentPage);
+  });
 
   // socket.on("message_seen", (messageId) => {
   //   // io.to(data.receiverId).emit("receive_message", data);
   // });
 
-  // socket.on("typing", (receiverId) => {
-  //   io.to(receiverId).emit("typing", { senderId: socket.id });
-  // });
-
-  socket.on("disconnect", () => {
+  socket.on("disconnect", async () => {
     console.log("User disconnected: ", socket.id);
     delete users[userId];
-    io.emit("getOnlineUsers", Object.keys(users));
+    io.emit("onlineUsers", Object.keys(users));
+    await User.findByIdAndUpdate(userId, { lastSeen: Date.now() });
   });
 });
 
-module.exports = { app, server, io, getReceiverSocket };
+module.exports = { app, server, io, getReceiverSocket, getCurrentPage };
