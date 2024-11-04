@@ -7,7 +7,7 @@ const Users = () => {
   const { users } = useSelector((state) => state.user);
 
   return (
-    <div className="h-full w-full md:max-w-max flex flex-col gap-2 px-2 py-3 bg-white rounded-ss-lg border-r">
+    <div className="h-full w-full flex flex-col gap-2 px-2 py-3 bg-white rounded-ss-lg border-r">
       <h1 className="font-bold mb-2">Chats</h1>
       <div className="px-2 text-sm rounded-md bg-gray-100 border border-b-2 border-b-orange-500 flex justify-start items-center">
         <LiaSearchSolid size={14} />

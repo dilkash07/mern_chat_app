@@ -1,19 +1,15 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import SideNave from "../components/core/SideNave";
 import Users from "../components/user/Users";
 import { useDispatch, useSelector } from "react-redux";
 import { getUserProfile, getUsers } from "../services/operations/UserAPI";
-import { Outlet } from "react-router-dom";
-import io from "socket.io-client";
-import { setOnlineUsers } from "../redux/slice/UserSlice";
-import { setMessages, setNewMessage } from "../redux/slice/MessageSlice";
-import { playNotification } from "../components/utils/audioPlayer";
-import notificationSound from "../assets/notification.mp3";
+import { Outlet, useLocation } from "react-router-dom";
 
 const Home = () => {
   const dispatch = useDispatch();
   const { token } = useSelector((state) => state.auth);
-  const { user } = useSelector((state) => state.user);
+  const location = useLocation();
+  const basePath = location.pathname === "/";
 
   useEffect(() => {
     if (token !== null) {
@@ -22,33 +18,23 @@ const Home = () => {
     }
   }, []);
 
-  useEffect(() => {
-    if (user !== null) {
-      const socket = io(import.meta.env.VITE_SERVER_URL, {
-        query: {
-          userId: user._id,
-        },
-      });
-
-      socket.on("onlineUsers", (data) => {
-        dispatch(setOnlineUsers(data));
-      });
-
-      socket.on("receive_message", (data) => {
-        playNotification(notificationSound);
-        dispatch(setNewMessage(data));
-      });
-    }
-  }, [user]);
-
   return (
     <div className="h-screen w-screen flex">
-      <div className="w-full h-full flex">
-        <div className="w-full md:max-w-fit h-full flex bg-orange-200">
-          <SideNave />
+      <SideNave />
+      <div className="w-full h-full md:flex bg-orange-200">
+        <section
+          className={`${!basePath && "w-full md:w-fit hidden md:block"}`}
+        >
           <Users />
-        </div>
-        <Outlet />
+        </section>
+
+        <section
+          className={`h-full w-full bg-white ${
+            basePath && "hidden md:grid place-content-center"
+          }`}
+        >
+          {basePath ? <div>Select user to send message</div> : <Outlet />}
+        </section>
       </div>
     </div>
   );

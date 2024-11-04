@@ -33,14 +33,14 @@ const Messages = () => {
   }, [messages]);
 
   return (
-    <div className="h-[calc(100vh-101px)] w-full grid grid-rows-[9fr,1fr]">
+    <div className="h-[calc(100vh-101px)] grid grid-rows-[9fr,1fr]">
       <div
         className="p-5 bg-no-repeat bg-cover overflow-y-scroll scrollbar-none"
         style={{ backgroundImage: `url(${backgroundImage})` }}
       >
         {messages?.map((message) => (
           <div key={message._id} ref={messagesEndRef}>
-            {user._id === message.sender ? (
+            {user?._id === message.sender ? (
               <div className="chat chat-end mb-1">
                 <div className="chat-bubble chat-bubble-error flex gap-5 items-center bg-green-200">
                   {message.text}
