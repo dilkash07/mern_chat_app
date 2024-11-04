@@ -3,7 +3,7 @@ import SideNave from "../components/core/SideNave";
 import Users from "../components/user/Users";
 import { useDispatch, useSelector } from "react-redux";
 import { getUserProfile, getUsers } from "../services/operations/UserAPI";
-import { Outlet, useLocation } from "react-router-dom";
+import { Outlet, useLocation, useParams } from "react-router-dom";
 
 const Home = () => {
   const dispatch = useDispatch();

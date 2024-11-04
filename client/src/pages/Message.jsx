@@ -3,14 +3,23 @@ import Header from "../components/message/Header";
 import { useParams } from "react-router-dom";
 import Messages from "../components/message/Messages";
 import { useSocket } from "../context/SocketContext";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import backgroundImage from "../assets/wallpaper.png";
+import { getMessages } from "../services/operations/MessageAPI";
 
 const Message = () => {
   const socket = useSocket();
+  const dispatch = useDispatch();
+  const { token } = useSelector((state) => state.auth);
   const { user } = useSelector((state) => state.user);
   const { messages } = useSelector((state) => state.message);
   const { id } = useParams();
+
+  useEffect(() => {
+    if (token !== null) {
+      dispatch(getMessages(id, token));
+    }
+  }, [id]);
 
   useEffect(() => {
     if (socket && user) {

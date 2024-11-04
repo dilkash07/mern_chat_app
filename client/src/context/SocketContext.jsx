@@ -9,6 +9,7 @@ import {
 } from "../redux/slice/MessageSlice";
 import { playNotification } from "../components/utils/audioPlayer";
 import notificationSound from "../assets/notification.mp3";
+import { useParams } from "react-router-dom";
 
 const SocketContext = createContext();
 
@@ -31,7 +32,9 @@ export const SocketProvider = ({ children }) => {
 
       socket.on("receiveMessage", (data) => {
         playNotification(notificationSound);
-        dispatch(setNewMessage(data));
+        if (data.seen) {
+          dispatch(setNewMessage(data));
+        }
       });
 
       socket.on("seenMessage", (data) => {

@@ -9,7 +9,7 @@ import { useParams } from "react-router-dom";
 const SendMessage = () => {
   const dispatch = useDispatch();
   const { token } = useSelector((state) => state.auth);
-  const { receiver } = useSelector((state) => state.message);
+  const { user } = useSelector((state) => state.user);
   const [message, setMessage] = useState("");
   const [isTyping, setIsTyping] = useState(false);
   const socket = useSocket();
@@ -19,23 +19,21 @@ const SendMessage = () => {
     setMessage(event.target.value);
 
     setIsTyping(true);
-    socket.emit("typing", { id, isTyping: true });
+    socket.emit("typing", { id, sender: user._id, isTyping: true });
   };
 
   useEffect(() => {
     if (isTyping) {
       setTimeout(() => {
         setIsTyping(false);
-        socket.emit("typing", { id, isTyping: false });
+        socket.emit("typing", { id, sender: user._id, isTyping: false });
       }, 2000);
     }
   }, [isTyping]);
 
   const submitHandler = (event) => {
     event.preventDefault();
-
-    dispatch(sendMessage(message, receiver._id, token));
-
+    dispatch(sendMessage(message, id, token));
     setMessage("");
   };
 

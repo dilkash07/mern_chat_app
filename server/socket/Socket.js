@@ -33,22 +33,21 @@ io.on("connection", (socket) => {
 
   io.emit("onlineUsers", Object.keys(users));
 
-  socket.on("typing", ({ id, isTyping }) => {
+  socket.on("typing", ({ id, sender, isTyping }) => {
     const receiver = users[id];
+    const receiverCurrentPage = currentPage[id];
 
-    if (receiver) {
+    if (receiver && receiverCurrentPage === sender) {
       io.to(receiver).emit("isTyping", isTyping);
     }
   });
 
   socket.on("leavePage", ({ sender }) => {
     delete currentPage[sender];
-    // console.log("leave: : ", currentPage);
   });
 
   socket.on("enterPage", ({ sender, receiver }) => {
     currentPage[sender] = receiver;
-    // console.log("current: : ", currentPage);
   });
 
   // socket.on("message_seen", (messageId) => {

@@ -1,18 +1,13 @@
 import React, { useEffect, useRef } from "react";
-import { useParams } from "react-router-dom";
 import backgroundImage from "../../assets/wallpaper.png";
 import SendMessage from "./SendMessage";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import moment from "moment";
-import { getMessages } from "../../services/operations/MessageAPI";
 import { BiCheckDouble } from "react-icons/bi";
 
 const Messages = () => {
-  const dispatch = useDispatch();
-  const { token } = useSelector((state) => state.auth);
   const { user } = useSelector((state) => state.user);
   const { messages } = useSelector((state) => state.message);
-  const { id } = useParams();
 
   const messagesEndRef = useRef(null);
 
@@ -21,12 +16,6 @@ const Messages = () => {
       behavior: "smooth",
     });
   };
-
-  useEffect(() => {
-    if (token !== null) {
-      dispatch(getMessages(id, token));
-    }
-  }, [id]);
 
   useEffect(() => {
     scrollToBottom();
