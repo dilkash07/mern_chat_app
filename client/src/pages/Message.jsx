@@ -4,8 +4,9 @@ import { useParams } from "react-router-dom";
 import Messages from "../components/message/Messages";
 import { useSocket } from "../context/SocketContext";
 import { useDispatch, useSelector } from "react-redux";
-import backgroundImage from "../assets/wallpaper.png";
 import { getMessages } from "../services/operations/MessageAPI";
+import SendMessage from "../components/message/SendMessage";
+import EmptyMessages from "../components/message/EmptyMessages";
 
 const Message = () => {
   const socket = useSocket();
@@ -36,16 +37,12 @@ const Message = () => {
   return (
     <div className="h-full w-full flex flex-col ">
       <Header />
-      {messages ? (
-        <Messages />
-      ) : (
-        <div
-          className="h-full bg-no-repeat bg-cover grid place-items-center text-xl"
-          style={{ backgroundImage: `url(${backgroundImage})` }}
-        >
-          Say! Hi to start the conversation
-        </div>
-      )}
+
+      <div className="h-[calc(100vh-101px)] grid grid-rows-[9fr,1fr]">
+        {messages ? <Messages /> : <EmptyMessages />}
+
+        <SendMessage />
+      </div>
     </div>
   );
 };

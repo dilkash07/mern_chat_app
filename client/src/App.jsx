@@ -6,21 +6,58 @@ import Error from "./pages/Error";
 import ForgotPassword from "./pages/ForgotPassword";
 import Header from "./components/core/Header";
 import Message from "./pages/Message";
+import PrivateRoute from "./components/auth/PrivateRoute";
+import OpenRoute from "./components/auth/OpenRoute";
 
 function App() {
   return (
     <div className="h-screen flex flex-col bg-white text-black">
       <Header />
       <Routes>
-        <Route path="/" element={<Home />}>
-          <Route path="message/:id" element={<Message />} />
+        <Route
+          path="/"
+          element={
+            <PrivateRoute>
+              <Home />
+            </PrivateRoute>
+          }
+        >
+          <Route
+            path="message/:id"
+            element={
+              <PrivateRoute>
+                <Message />
+              </PrivateRoute>
+            }
+          />
         </Route>
-        <Route path="/login" element={<Login />} />
-        <Route path="/signup" element={<Signup />} />
-        <Route path="/forgot-password" element={<ForgotPassword />} />
+        <Route
+          path="/login"
+          element={
+            <OpenRoute>
+              <Login />
+            </OpenRoute>
+          }
+        />
+        <Route
+          path="/signup"
+          element={
+            <OpenRoute>
+              <Signup />
+            </OpenRoute>
+          }
+        />
+        <Route
+          path="/forgot-password"
+          element={
+            <OpenRoute>
+              <ForgotPassword />
+            </OpenRoute>
+          }
+        />
         <Route path="*" element={<Error />} />
       </Routes>
-    </div>      
+    </div>
   );
 }
 

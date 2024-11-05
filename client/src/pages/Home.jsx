@@ -4,6 +4,7 @@ import Users from "../components/user/Users";
 import { useDispatch, useSelector } from "react-redux";
 import { getUserProfile, getUsers } from "../services/operations/UserAPI";
 import { Outlet, useLocation, useParams } from "react-router-dom";
+import { VscLockSmall } from "react-icons/vsc";
 
 const Home = () => {
   const dispatch = useDispatch();
@@ -33,7 +34,25 @@ const Home = () => {
             basePath && "hidden md:grid place-content-center"
           }`}
         >
-          {basePath ? <div>Select user to send message</div> : <Outlet />}
+          {basePath ? (
+            <div className="h-full flex flex-col justify-center items-center gap-10">
+              <div className="grid gap-2 place-items-center">
+                <p className="text-2xl text-orange-600 font-bold">
+                  Mansuri<span className="text-black">Chat</span>
+                </p>
+                <div className="text-sm text-gray-600 flex flex-col items-center">
+                  <p>Select user to send message</p>
+                  <p>Send and receive messages online</p>
+                </div>
+              </div>
+              <div className="text-gray-500 text-sm flex gap-1 items-center">
+                <VscLockSmall size={18} />
+                <p>End-to-end encrypted</p>
+              </div>
+            </div>
+          ) : (
+            <Outlet />
+          )}
         </section>
       </div>
     </div>
