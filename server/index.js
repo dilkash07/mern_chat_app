@@ -1,9 +1,11 @@
 const express = require("express");
 require("dotenv").config();
 const database = require("./config/database");
+const cloudinary = require("./config/cloudinary");
 const cookieParser = require("cookie-parser");
 const bodyParser = require("body-parser");
 const cors = require("cors");
+const fileUpload = require("express-fileupload");
 const { app, server } = require("./socket/Socket");
 
 const authRoutes = require("./router/Auth");
@@ -20,11 +22,19 @@ app.use(
   })
 );
 
+app.use(
+  fileUpload({
+    useTempFiles: true,
+    tempFileDir: "/tmp/",
+  })
+);
+
 app.use("/api/v1/auth", authRoutes);
 app.use("/api/v1/user", userRoutes);
 app.use("/api/v1/message", messageRoutes);
 
 database.connect();
+cloudinary.connect();
 
 const port = process.env.PORT || 3000;
 

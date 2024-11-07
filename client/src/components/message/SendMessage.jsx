@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { sendMessage } from "../../services/operations/MessageAPI";
 import { useSocket } from "../../context/SocketContext";
 import { useParams } from "react-router-dom";
+import Attach from "./Attach";
 
 const SendMessage = () => {
   const dispatch = useDispatch();
@@ -12,6 +13,7 @@ const SendMessage = () => {
   const { user } = useSelector((state) => state.user);
   const [message, setMessage] = useState("");
   const [isTyping, setIsTyping] = useState(false);
+  const [attach, setAttach] = useState(false);
   const socket = useSocket();
   const { id } = useParams();
 
@@ -42,7 +44,10 @@ const SendMessage = () => {
       className="px-5 bg-white flex gap-5 items-center border-t"
       onSubmit={submitHandler}
     >
-      <GrAttachment size={20} />
+      <GrAttachment size={20} onClick={() => setAttach((prev) => !prev)} />
+
+      {attach && <Attach />}
+
       <input
         type="text"
         placeholder="Type a message"

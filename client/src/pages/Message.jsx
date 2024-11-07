@@ -35,7 +35,7 @@ const Message = () => {
   }, [id, socket, user]);
 
   return (
-    <div className="h-full w-full flex flex-col ">
+    <div className="h-full w-full flex flex-col relative">
       <Header />
 
       <div className="h-[calc(100vh-101px)] grid grid-rows-[9fr,1fr]">

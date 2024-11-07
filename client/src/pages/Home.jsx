@@ -2,11 +2,15 @@ import React, { useEffect, useState } from "react";
 import SideNave from "../components/core/SideNave";
 import Users from "../components/user/Users";
 import { useDispatch, useSelector } from "react-redux";
-import { getUserProfile, getUsers } from "../services/operations/UserAPI";
-import { Outlet, useLocation, useParams } from "react-router-dom";
+import {
+  getConversationUsers,
+  getUserProfile,
+} from "../services/operations/UserAPI";
+import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import { VscLockSmall } from "react-icons/vsc";
 
 const Home = () => {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const { token } = useSelector((state) => state.auth);
   const location = useLocation();
@@ -14,8 +18,8 @@ const Home = () => {
 
   useEffect(() => {
     if (token !== null) {
-      dispatch(getUsers(token));
-      dispatch(getUserProfile(token));
+      dispatch(getUserProfile(token, navigate));
+      dispatch(getConversationUsers(token));
     }
   }, []);
 

@@ -10,8 +10,8 @@ const userSchema = new mongoose.Schema(
     },
     lastName: {
       type: String,
-      required: true,
       trim: true,
+      default: "",
     },
     email: {
       type: String,
@@ -24,9 +24,25 @@ const userSchema = new mongoose.Schema(
       trim: true,
     },
     profilePic: {
-      image_url: String,
-      public_id: String,
+      image_url: {
+        type: String,
+        required: true,
+      },
+      public_id: {
+        type: String,
+      },
     },
+    about: {
+      type: String,
+      maxlength: 150,
+      default: "Hey there! I am using MansuriChat.",
+    },
+    conversations: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Conversation",
+      },
+    ],
     lastSeen: {
       type: Date,
       default: Date.now(),

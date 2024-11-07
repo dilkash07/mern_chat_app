@@ -23,15 +23,25 @@ exports.sendMessage = async (req, res) => {
     });
 
     if (!conversation) {
-      await Conversation.create({
+      const conversation = await Conversation.create({
         members: [sender, receiver],
         messages: [message._id],
+        lastMessage: message._id,
+        unSeenMessage: seen ? 0 : 1,
+      });
+
+      // create users conversations
+      await User.findByIdAndUpdate(sender, {
+        $push: { conversations: conversation._id },
+      });
+
+      await User.findByIdAndUpdate(receiver, {
+        $push: { conversations: conversation._id },
       });
 
       if (receiverSocket) {
         io.to(receiverSocket).emit("receiveMessage", message);
       }
-
       return res.status(200).json({
         success: true,
         message: "Message send successfully",
@@ -39,7 +49,11 @@ exports.sendMessage = async (req, res) => {
       });
     }
 
+    if (!seen) {
+      conversation.unSeenMessage = conversation.unSeenMessage + 1;
+    }
     conversation.messages.push(message._id);
+    conversation.lastMessage = message._id;
     conversation.save();
 
     if (receiverSocket) {
@@ -80,6 +94,10 @@ exports.getMessage = async (req, res) => {
           await message.save();
         }
       }
+
+      conversation.unSeenMessage = 0;
+      await conversation.save({ timestamps: false });
+
       if (receiverSocket) {
         io.to(receiverSocket).emit("seenMessage", conversation.messages);
       }

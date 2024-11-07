@@ -1,7 +1,7 @@
 import React from "react";
 import { useSelector } from "react-redux";
 import { LiaSearchSolid } from "react-icons/lia";
-import Card from "./Card";
+import UsersCard from "./UsersCard";
 
 const Users = () => {
   const { users } = useSelector((state) => state.user);
@@ -20,7 +20,7 @@ const Users = () => {
 
       <div className="h-[78vh] flex flex-col gap-1.5 overflow-y-scroll scrollbar-none mt-2">
         {users?.map((user) => (
-          <Card user={user} key={user._id} />
+          <UsersCard user={user} key={user._id} />
         ))}
       </div>
     </div>

@@ -26,8 +26,7 @@ export function login(formData, navigate) {
 
       navigate("/");
     } catch (error) {
-      // toast.error(error.response.data.message);
-      console.log(error);
+      toast.error(error.response.data.message);
       navigate("/login");
     }
     toast.dismiss(toastId);
@@ -51,5 +50,16 @@ export function signup(formData, navigate) {
       toast.error(error.response.data.message);
     }
     dispatch(setLoading(false));
+  };
+}
+
+export function logout(navigate) {
+  return async (dispatch) => {
+    dispatch(setToken(null));
+    dispatch(setUser(null));
+    localStorage.removeItem("token");
+    sessionStorage.removeItem("user");
+    toast.success("logged out successfully");
+    navigate("/");
   };
 }
