@@ -1,5 +1,9 @@
 import { setLoading } from "../../redux/slice/LoaderSlice";
-import { setUser, setUsers } from "../../redux/slice/UserSlice";
+import {
+  setConversationUsers,
+  setUser,
+  setUsers,
+} from "../../redux/slice/UserSlice";
 import { apiConnector } from "../apiConnector";
 import { userEndPoints } from "../apis";
 import toast from "react-hot-toast";
@@ -52,8 +56,7 @@ export function getConversationUsers(token) {
         throw new Error(response.data.message);
       }
 
-      // dispatch(setUsers(response.data.response));
-      console.log("conversation: ", response.data.response);
+      dispatch(setConversationUsers(response.data.response));
     } catch (error) {
       toast.error(error.response.data.message);
     }

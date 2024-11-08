@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   users: null,
+  conversationUsers: null,
   user: null,
   onlineUsers: null,
   socket: null,
@@ -13,6 +14,9 @@ const userSlice = createSlice({
   reducers: {
     setUsers(state, action) {
       state.users = action.payload;
+    },
+    setConversationUsers(state, action) {
+      state.conversationUsers = action.payload;
     },
     setUser(state, action) {
       state.user = action.payload;
@@ -26,6 +30,11 @@ const userSlice = createSlice({
   },
 });
 
-export const { setUsers, setUser, setOnlineUsers, setSocket } =
-  userSlice.actions;
+export const {
+  setUsers,
+  setConversationUsers,
+  setUser,
+  setOnlineUsers,
+  setSocket,
+} = userSlice.actions;
 export default userSlice.reducer;

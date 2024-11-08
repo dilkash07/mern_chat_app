@@ -6,7 +6,9 @@ const {
 
 exports.getUsers = async (req, res) => {
   try {
-    const response = await User.find({ _id: { $ne: req.user.id } });
+    const response = await User.find({ _id: { $ne: req.user.id } }).sort({
+      createdAt: -1,
+    });
 
     res.status(200).json({
       success: true,
@@ -34,13 +36,17 @@ exports.getConversationUsers = async (req, res) => {
           {
             path: "members",
             match: { _id: { $ne: id } },
-            select: "firstName lastName",
           },
-          { path: "lastMessage", select: "text createdAt" },
+          { path: "lastMessage" },
         ],
       })
-      .sort({ "conversations.updatedAt": -1 })
       .exec();
+
+    if (users && users.conversations) {
+      users.conversations.sort(
+        (a, b) => new Date(b.updatedAt) - new Date(a.updatedAt)
+      );
+    }
 
     res.status(200).json({
       success: true,

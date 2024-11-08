@@ -34,3 +34,28 @@ export const formattedLastSeen = (lastSeenTimestamp) => {
     )} at ${lastSeenDate.toLocaleTimeString([], timeOptions)}`;
   }
 };
+
+export const formattedMessageTime = (messageTimestamp) => {
+  const messageDate = new Date(messageTimestamp);
+  const now = new Date();
+
+  const diffTime = now - messageDate;
+  const oneDay = 24 * 60 * 60 * 1000;
+
+  const timeOptions = { hour: "2-digit", minute: "2-digit", hour12: false };
+  const dateOptions = { day: "2-digit", month: "2-digit", year: "numeric" };
+
+  if (diffTime < oneDay && now.getDate() === messageDate.getDate()) {
+    return messageDate.toLocaleTimeString([], timeOptions);
+  } else if (
+    diffTime < 2 * oneDay &&
+    now.getDate() - messageDate.getDate() === 1
+  ) {
+    return "yesterday";
+  } else {
+    return `${messageDate.toLocaleDateString(
+      [],
+      dateOptions
+    )} ${messageDate.toLocaleTimeString([], timeOptions)}`;
+  }
+};

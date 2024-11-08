@@ -2,9 +2,10 @@ import React from "react";
 import { useSelector } from "react-redux";
 import { LiaSearchSolid } from "react-icons/lia";
 import UsersCard from "./UsersCard";
+import ConversationCard from "./ConversationCard";
 
 const Users = () => {
-  const { users } = useSelector((state) => state.user);
+  const { users, conversationUsers } = useSelector((state) => state.user);
 
   return (
     <div className="h-full w-full flex flex-col gap-2 px-2 py-3 bg-white rounded-ss-lg border-r">
@@ -19,9 +20,11 @@ const Users = () => {
       </div>
 
       <div className="h-[78vh] flex flex-col gap-1.5 overflow-y-scroll scrollbar-none mt-2">
-        {users?.map((user) => (
-          <UsersCard user={user} key={user._id} />
-        ))}
+        {users !== null
+          ? users?.map((user) => <UsersCard user={user} key={user._id} />)
+          : conversationUsers?.conversations.map((convUser) => (
+              <ConversationCard convUser={convUser} key={convUser._id} />
+            ))}
       </div>
     </div>
   );

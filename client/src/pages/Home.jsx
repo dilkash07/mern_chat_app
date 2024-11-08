@@ -13,6 +13,7 @@ const Home = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { token } = useSelector((state) => state.auth);
+  const { messages } = useSelector((state) => state.message);
   const location = useLocation();
   const basePath = location.pathname === "/";
 
@@ -21,7 +22,7 @@ const Home = () => {
       dispatch(getUserProfile(token, navigate));
       dispatch(getConversationUsers(token));
     }
-  }, []);
+  }, [messages]);
 
   return (
     <div className="h-screen w-screen flex">

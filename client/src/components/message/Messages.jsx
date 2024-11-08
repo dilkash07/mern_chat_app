@@ -32,7 +32,7 @@ const Messages = () => {
               <div className="chat-bubble chat-bubble-error flex gap-5 items-center bg-green-200">
                 {message.text}
                 <p className="text-xs flex gap-1 justify-end items-center mt-5">
-                  {moment(message.createdAt).format("hh:mm")}
+                  {moment(message.createdAt).format("HH:mm")}
                   <BiCheckDouble
                     size={18}
                     className={`${
