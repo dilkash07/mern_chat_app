@@ -9,14 +9,15 @@ import {
 } from "../redux/slice/MessageSlice";
 import { playNotification } from "../components/utils/audioPlayer";
 import notificationSound from "../assets/notification.mp3";
-import { useParams } from "react-router-dom";
+import { getConversationUsers } from "../services/operations/UserAPI";
 
 const SocketContext = createContext();
 
 export const SocketProvider = ({ children }) => {
   const dispatch = useDispatch();
-  const [socket, setSocket] = useState(null);
+  const { token } = useSelector((state) => state.auth);
   const { user } = useSelector((state) => state.user);
+  const [socket, setSocket] = useState(null);
 
   useEffect(() => {
     if (user !== null) {
@@ -32,6 +33,7 @@ export const SocketProvider = ({ children }) => {
 
       socket.on("receiveMessage", (data) => {
         playNotification(notificationSound);
+        dispatch(getConversationUsers(token));
         if (data.seen) {
           dispatch(setNewMessage(data));
         }

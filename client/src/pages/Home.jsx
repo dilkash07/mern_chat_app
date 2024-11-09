@@ -2,10 +2,7 @@ import React, { useEffect, useState } from "react";
 import SideNave from "../components/core/SideNave";
 import Users from "../components/user/Users";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  getConversationUsers,
-  getUserProfile,
-} from "../services/operations/UserAPI";
+import { getConversationUsers } from "../services/operations/UserAPI";
 import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import { VscLockSmall } from "react-icons/vsc";
 
@@ -19,8 +16,7 @@ const Home = () => {
 
   useEffect(() => {
     if (token !== null) {
-      dispatch(getUserProfile(token, navigate));
-      dispatch(getConversationUsers(token));
+      dispatch(getConversationUsers(token, navigate));
     }
   }, [messages]);
 
@@ -29,7 +25,7 @@ const Home = () => {
       <SideNave />
       <div className="w-full h-full md:flex bg-orange-200">
         <section
-          className={`${!basePath && "w-full md:w-fit hidden md:block"}`}
+          className={`h-full ${!basePath && "w-full md:w-fit hidden md:block"}`}
         >
           <Users />
         </section>

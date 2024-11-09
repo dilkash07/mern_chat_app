@@ -6,7 +6,7 @@ import { BsFileEarmarkArrowUpFill } from "react-icons/bs";
 
 const Attach = () => {
   return (
-    <div className="bg-white bg-opacity-50 shadow rounded absolute bottom-16 left-1 w-fit p-2">
+    <div className="bg-white shadow rounded absolute bottom-16 left-1 w-fit p-2">
       <form>
         <label className="flex items-center px-2 py-1 gap-3 hover:bg-gray-100 cursor-pointer rounded-md">
           <FaRegImage size={16} />

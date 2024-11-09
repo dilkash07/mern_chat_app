@@ -24,11 +24,11 @@ exports.getUsers = async (req, res) => {
   }
 };
 
-exports.getConversationUsers = async (req, res) => {
+exports.getConversedUsers = async (req, res) => {
   try {
     const { id } = req.user;
 
-    const users = await User.findById(id)
+    const user = await User.findById(id)
       .populate({
         path: "conversations",
         select: "-messages",
@@ -42,8 +42,10 @@ exports.getConversationUsers = async (req, res) => {
       })
       .exec();
 
-    if (users && users.conversations) {
-      users.conversations.sort(
+    user.password = undefined;
+
+    if (user && user.conversations) {
+      user.conversations.sort(
         (a, b) => new Date(b.updatedAt) - new Date(a.updatedAt)
       );
     }
@@ -51,7 +53,7 @@ exports.getConversationUsers = async (req, res) => {
     res.status(200).json({
       success: true,
       message: "Coversations fetched successfully",
-      response: users,
+      response: user,
     });
   } catch (error) {
     console.log(error);
@@ -62,20 +64,34 @@ exports.getConversationUsers = async (req, res) => {
   }
 };
 
-exports.getUserProfile = async (req, res) => {
+exports.getSearchUser = async (req, res) => {
   try {
-    const response = await User.findById(req.user.id);
+    const { query } = req.query;
+
+    if (!query) {
+      return res.status(401).json({
+        success: false,
+        message: "Serach query is required",
+      });
+    }
+
+    const response = await User.find({
+      $or: [
+        { firstName: { $regex: query, $options: "i" } },
+        { lastName: { $regex: query, $options: "i" } },
+        { email: { $regex: query, $options: "i" } },
+      ],
+    });
 
     res.status(200).json({
       success: true,
-      message: "User profie fetched successfully",
+      message: "User fetched successfully",
       response,
     });
   } catch (error) {
-    console.log(error);
     res.status(500).json({
       success: false,
-      message: "Something went wrong while fetching user profile",
+      message: "Something went wrong while searching user",
     });
   }
 };

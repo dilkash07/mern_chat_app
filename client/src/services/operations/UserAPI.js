@@ -11,8 +11,8 @@ import { logout } from "./AuthAPI";
 
 const {
   GET_USERS_API,
-  GET_CONVERSATION_USERS_API,
-  GET_USER_PROFILE_API,
+  GET_SEARCH_USER_API,
+  GET_CONVERSED_USERS_API,
   UPDATE_PROFILE_PICTURE_API,
   UPDATE_NAME_API,
   UPDATE_ABOUT_API,
@@ -39,13 +39,40 @@ export function getUsers(token) {
   };
 }
 
-export function getConversationUsers(token) {
+export function getSearchUser(query, token) {
   return async (dispatch) => {
     dispatch(setLoading(true));
     try {
       const response = await apiConnector(
         "Get",
-        GET_CONVERSATION_USERS_API,
+        GET_SEARCH_USER_API,
+        null,
+        {
+          Authorization: `Bearer ${token}`,
+        },
+        { query }
+      );
+
+      if (!response.data.success) {
+        throw new Error(response.data.message);
+      }
+
+      dispatch(setUsers(response.data.response));
+    } catch (error) {
+      toast.error(error.response.data.message);
+      console.log(error);
+    }
+    dispatch(setLoading(false));
+  };
+}
+
+export function getConversationUsers(token, navigate) {
+  return async (dispatch) => {
+    dispatch(setLoading(true));
+    try {
+      const response = await apiConnector(
+        "Get",
+        GET_CONVERSED_USERS_API,
         null,
         {
           Authorization: `Bearer ${token}`,
@@ -56,27 +83,8 @@ export function getConversationUsers(token) {
         throw new Error(response.data.message);
       }
 
-      dispatch(setConversationUsers(response.data.response));
-    } catch (error) {
-      toast.error(error.response.data.message);
-    }
-    dispatch(setLoading(false));
-  };
-}
-
-export function getUserProfile(token, navigate) {
-  return async (dispatch) => {
-    dispatch(setLoading(true));
-    try {
-      const response = await apiConnector("Get", GET_USER_PROFILE_API, null, {
-        Authorization: `Bearer ${token}`,
-      });
-
-      if (!response.data.success) {
-        throw new Error(response.data.message);
-      }
-
       dispatch(setUser(response.data.response));
+      dispatch(setConversationUsers(response.data.response));
     } catch (error) {
       dispatch(logout(navigate));
       toast.error(error.response.data.message);

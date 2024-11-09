@@ -82,7 +82,9 @@ exports.getMessage = async (req, res) => {
 
     const conversation = await Conversation.findOne({
       members: { $all: [sender, receiver] },
-    }).populate("messages");
+    })
+      .populate("messages")
+      .populate("lastMessage");
 
     const response = await User.findById(receiver);
 
@@ -95,8 +97,10 @@ exports.getMessage = async (req, res) => {
         }
       }
 
-      conversation.unSeenMessage = 0;
-      await conversation.save({ timestamps: false });
+      if (conversation.lastMessage.sender.toString() !== sender) {
+        conversation.unSeenMessage = 0;
+        await conversation.save({ timestamps: false });
+      }
 
       if (receiverSocket) {
         io.to(receiverSocket).emit("seenMessage", conversation.messages);

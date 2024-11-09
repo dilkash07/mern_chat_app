@@ -1,12 +1,13 @@
 import { apiConnector } from "../apiConnector";
 import { messageEndpoints } from "../apis";
 import { setLoading } from "../../redux/slice/LoaderSlice";
+import toast from "react-hot-toast";
 import {
   setMessages,
   setNewMessage,
   setReceiver,
 } from "../../redux/slice/MessageSlice";
-import toast from "react-hot-toast";
+import { setUsers } from "../../redux/slice/UserSlice";
 
 const { GET_MESSAGES_API, SEND_MESSAGES_API } = messageEndpoints;
 
@@ -27,6 +28,7 @@ export function getMessages(receiver, token) {
         throw new Error(response.data.message);
       }
 
+      dispatch(setUsers(null));
       dispatch(setMessages(response.data.response));
       dispatch(setReceiver(response.data.receiver));
     } catch (error) {
@@ -55,6 +57,7 @@ export function sendMessage(text, receiver, token) {
       }
 
       dispatch(setNewMessage(response.data.response));
+      dispatch(setUsers(null));
     } catch (error) {
       toast.error(error.response.data.message);
       console.log(error);

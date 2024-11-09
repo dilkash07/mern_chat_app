@@ -8,12 +8,13 @@ import { useNavigate } from "react-router-dom";
 import Profile from "../user/Profile";
 import { logout } from "../../services/operations/AuthAPI";
 import { getUsers } from "../../services/operations/UserAPI";
+import { setUsers } from "../../redux/slice/UserSlice";
 
 const SideNave = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { token } = useSelector((state) => state.auth);
-  const { user } = useSelector((state) => state.user);
+  const { user, users } = useSelector((state) => state.user);
   const [openProfile, setOpenProfile] = useState(false);
 
   const logoutHandler = () => {
@@ -21,7 +22,11 @@ const SideNave = () => {
   };
 
   const clickHandler = () => {
-    dispatch(getUsers(token));
+    if (users) {
+      dispatch(setUsers(null));
+    } else {
+      dispatch(getUsers(token));
+    }
   };
 
   return (
