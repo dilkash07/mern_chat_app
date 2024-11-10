@@ -35,7 +35,7 @@ const Login = () => {
 
   return (
     <div>
-      <div className="my-5">
+      <div className="my-10">
         <form
           className="flex flex-col max-w-[375px] mx-auto p-5 rounded-md gap-y-2 text-sm bg-orange-200 "
           onSubmit={submitHandler}

@@ -50,10 +50,6 @@ io.on("connection", (socket) => {
     currentPage[sender] = receiver;
   });
 
-  // socket.on("message_seen", (messageId) => {
-  //   // io.to(data.receiverId).emit("receive_message", data);
-  // });
-
   socket.on("disconnect", async () => {
     console.log("User disconnected: ", socket.id);
     delete users[userId];

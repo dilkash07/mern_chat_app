@@ -45,7 +45,7 @@ const Signup = () => {
 
   return (
     <div>
-      <div className="my-5">
+      <div className="my-10">
         <form
           className="flex flex-col max-w-[375px] gap-y-1 mx-auto text-sm bg-orange-200 p-5 rounded-md"
           onSubmit={submitHandler}

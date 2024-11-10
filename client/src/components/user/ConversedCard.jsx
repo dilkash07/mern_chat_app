@@ -1,24 +1,24 @@
 import React from "react";
 import { BiCheckDouble } from "react-icons/bi";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
 import { formattedMessageTime } from "../utils/lastSeenFormatter";
 
 const ConversedCard = ({ convUser }) => {
   const { user } = useSelector((state) => state.user);
   const { onlineUsers } = useSelector((state) => state.user);
+  const { receiver, typing } = useSelector((state) => state.message);
   const member = convUser.members[0];
 
   return (
     <NavLink
       to={`/message/${member._id}`}
       className={({ isActive }) =>
-        `md:max-w-72 px-2 py-1.5 rounded-md flex gap-2 items-center cursor-default hover:bg-gray-100 ${
+        `max-w-screen-md md:w-72 px-2 py-1.5 rounded-md flex gap-2 items-center cursor-default hover:bg-gray-100 ${
           isActive && "bg-gray-200 bg-opacity-50"
         }`
       }
     >
-      {/* profilePic section */}
       <div className="max-w-1/6 relative ">
         <img
           src={member.profilePic.image_url}
@@ -26,13 +26,13 @@ const ConversedCard = ({ convUser }) => {
           className="w-10 aspect-square rounded-full"
         />
         {onlineUsers?.includes(member._id) && (
-          <div className="h-2 w-2 rounded-full bg-blue-500 absolute top-1 right-1"></div>
+          <div className="h-2 w-2 rounded-full bg-blue-500 absolute top-1 right-0"></div>
         )}
       </div>
 
       <div className="w-5/6 text-sm">
-        <div className="flex justify-between">
-          <p className="font-bold truncate">
+        <div className="flex justify-between ">
+          <p className="font-bold line-clamp-1">
             {member.firstName + " " + member.lastName}
           </p>
           <p
@@ -58,7 +58,7 @@ const ConversedCard = ({ convUser }) => {
             />
           </div>
 
-          <p className="mr-auto w-11/12 truncate">
+          <p className="mr-auto w-11/12 line-clamp-1">
             {convUser.lastMessage.text}
           </p>
 

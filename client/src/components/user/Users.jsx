@@ -5,6 +5,7 @@ import UsersCard from "./UsersCard";
 import ConversedCard from "./ConversedCard";
 import { getSearchUser } from "../../services/operations/UserAPI";
 import { RxCross2 } from "react-icons/rx";
+import { setUsers } from "../../redux/slice/UserSlice";
 
 const Users = () => {
   const dispatch = useDispatch();
@@ -17,6 +18,8 @@ const Users = () => {
     setQuery(query);
     if (query.length > 0) {
       dispatch(getSearchUser(event.target.value, token));
+    } else {
+      dispatch(setUsers(null));
     }
   };
 

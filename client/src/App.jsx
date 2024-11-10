@@ -8,6 +8,7 @@ import Header from "./components/core/Header";
 import Message from "./pages/Message";
 import PrivateRoute from "./components/auth/PrivateRoute";
 import OpenRoute from "./components/auth/OpenRoute";
+import ResetPassword from "./pages/ResetPassword";
 
 function App() {
   return (
@@ -52,6 +53,14 @@ function App() {
           element={
             <OpenRoute>
               <ForgotPassword />
+            </OpenRoute>
+          }
+        />
+        <Route
+          path="/reset-password/:token"
+          element={
+            <OpenRoute>
+              <ResetPassword />
             </OpenRoute>
           }
         />

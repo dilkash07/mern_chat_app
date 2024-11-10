@@ -5,7 +5,8 @@ import { setToken } from "../../redux/slice/AuthSlice";
 import { setUser } from "../../redux/slice/UserSlice";
 import { setLoading } from "../../redux/slice/LoaderSlice";
 
-const { LOGIN_API, SIGNUP_API } = endPoints;
+const { LOGIN_API, SIGNUP_API, RESET_PASSWORD_TOKEN_API, RESET_PASSWORD_API } =
+  endPoints;
 
 export function login(formData, navigate) {
   return async (dispatch) => {
@@ -61,5 +62,49 @@ export function logout(navigate) {
     sessionStorage.removeItem("user");
     toast.success("logged out successfully");
     navigate("/");
+  };
+}
+
+export function resetPasswordToken(email, setEmailSent) {
+  return async (dispatch) => {
+    dispatch(setLoading(true));
+    try {
+      const response = await apiConnector("Post", RESET_PASSWORD_TOKEN_API, {
+        email,
+      });
+
+      if (!response.data.success) {
+        throw new Error(response.data.message);
+      }
+
+      toast.success(response.data.message);
+      setEmailSent(true);
+    } catch (error) {
+      toast.error(error.response.data.message);
+    }
+    dispatch(setLoading(false));
+  };
+}
+
+export function resetPassword(formData, token, navigate) {
+  return async (dispatch) => {
+    dispatch(setLoading(true));
+    try {
+      const response = await apiConnector(
+        "Post",
+        RESET_PASSWORD_API + token,
+        formData
+      );
+
+      if (!response.data.success) {
+        throw new Error(response.data.message);
+      }
+
+      toast.success(response.data.message);
+      navigate("/login");
+    } catch (error) {
+      toast.error(error.response.data.message);
+    }
+    dispatch(setLoading(false));
   };
 }

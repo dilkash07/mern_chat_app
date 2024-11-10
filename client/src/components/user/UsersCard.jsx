@@ -9,12 +9,12 @@ const UsersCard = ({ user }) => {
     <NavLink
       to={`/message/${user._id}`}
       className={({ isActive }) =>
-        `w-72 px-2 py-1.5 rounded-md flex gap-2 items-center cursor-default hover:bg-gray-100 ${
+        `max-w-screen-md md:w-72 px-2 py-1.5 rounded-md flex gap-2 items-center cursor-default hover:bg-gray-100 ${
           isActive && "bg-gray-200 bg-opacity-50"
         }`
       }
     >
-      <div className="relative">
+      <div className="max-w-1/6 relative">
         <img
           src={user.profilePic.image_url}
           alt={user.firstName}
@@ -24,14 +24,12 @@ const UsersCard = ({ user }) => {
           <div className="h-2 w-2 rounded-full bg-blue-500 absolute top-1 right-0"></div>
         )}
       </div>
-      <div className="w-full text-sm">
-        <p className="font-bold">{user.firstName + " " + user.lastName}</p>
-        <p className="">
-          {/* {user.about.length > 3
-            ? user.about.split(" ").slice(0, 3).join(" ") + "..."
-            : user.about} */}
-          {user.about}
+
+      <div className="w-5/6 text-sm">
+        <p className="font-bold line-clamp-1">
+          {user.firstName + " " + user.lastName}
         </p>
+        <p className="line-clamp-2">{user.about}</p>
       </div>
     </NavLink>
   );

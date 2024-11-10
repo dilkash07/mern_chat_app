@@ -4,6 +4,8 @@ const baseUrl = "http://localhost:4000/api/v1";
 export const endPoints = {
   LOGIN_API: baseUrl + "/auth/login",
   SIGNUP_API: baseUrl + "/auth/signup",
+  RESET_PASSWORD_TOKEN_API: baseUrl + "/auth/reset-password-token",
+  RESET_PASSWORD_API: baseUrl + "/auth/reset-password/",
 };
 
 // USER ENDPOINTS

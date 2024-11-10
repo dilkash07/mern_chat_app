@@ -30,7 +30,7 @@ const Messages = () => {
           {user?._id === message.sender ? (
             <div className="chat chat-end mb-1">
               <div className="chat-bubble chat-bubble-error flex gap-5 items-center bg-green-200">
-                {message.text}
+                <p>{message.text}</p>
                 <p className="text-xs flex gap-1 justify-end items-center mt-5">
                   {moment(message.createdAt).format("HH:mm")}
                   <BiCheckDouble

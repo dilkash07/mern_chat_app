@@ -20,7 +20,7 @@ const Header = () => {
           </h1>
           <p className="text-sm text-gray-600">
             {typing
-              ? "typing"
+              ? "typing..."
               : onlineUsers?.includes(receiver?._id)
               ? "Online"
               : `last seen ${formattedLastSeen(receiver?.lastSeen)}`}
