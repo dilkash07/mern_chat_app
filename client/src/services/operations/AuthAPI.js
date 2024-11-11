@@ -5,8 +5,13 @@ import { setToken } from "../../redux/slice/AuthSlice";
 import { setUser } from "../../redux/slice/UserSlice";
 import { setLoading } from "../../redux/slice/LoaderSlice";
 
-const { LOGIN_API, SIGNUP_API, RESET_PASSWORD_TOKEN_API, RESET_PASSWORD_API } =
-  endPoints;
+const {
+  LOGIN_API,
+  SIGNUP_API,
+  SEND_OTP_API,
+  RESET_PASSWORD_TOKEN_API,
+  RESET_PASSWORD_API,
+} = endPoints;
 
 export function login(formData, navigate) {
   return async (dispatch) => {
@@ -34,20 +39,54 @@ export function login(formData, navigate) {
   };
 }
 
-export function signup(formData, navigate) {
+export function signup(
+  firstName,
+  lastName,
+  email,
+  password,
+  confirmPassword,
+  otp,
+  navigate
+) {
   return async (dispatch) => {
     dispatch(setLoading(true));
     try {
-      const response = await apiConnector("Post", SIGNUP_API, formData);
+      const response = await apiConnector("Post", SIGNUP_API, {
+        firstName,
+        lastName,
+        email,
+        password,
+        confirmPassword,
+        otp,
+      });
 
       if (!response.data.success) {
         throw new Error(response.data.message);
       }
 
       toast.success(response.data.message);
-
       navigate("/login");
     } catch (error) {
+      toast.error(error.response.data.message);
+    }
+    dispatch(setLoading(false));
+  };
+}
+
+export function sendOtp(email, navigate) {
+  return async (dispatch) => {
+    dispatch(setLoading(true));
+    try {
+      const response = await apiConnector("Post", SEND_OTP_API, { email });
+
+      if (!response.data.success) {
+        throw new Error(response.data.message);
+      }
+
+      toast.success(response.data.message);
+      navigate("/verify-email");
+    } catch (error) {
+      console.log(error);
       toast.error(error.response.data.message);
     }
     dispatch(setLoading(false));

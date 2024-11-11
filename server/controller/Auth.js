@@ -1,15 +1,25 @@
 const User = require("../models/User");
+const OTP = require("../models/OTP");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const crypto = require("crypto");
+const otpGenrator = require("otp-generator");
 const { mailSender } = require("../utils/mailSender");
 require("dotenv").config();
 
 exports.signup = async (req, res) => {
   try {
-    const { firstName, lastName, email, password, confirmPassword } = req.body;
+    const { firstName, lastName, email, password, confirmPassword, otp } =
+      req.body;
 
-    if (!firstName || !lastName || !email || !password || !confirmPassword) {
+    if (
+      !firstName ||
+      !lastName ||
+      !email ||
+      !password ||
+      !confirmPassword ||
+      !otp
+    ) {
       return res.status(400).json({
         success: false,
         message: "please fill all the details",
@@ -24,11 +34,21 @@ exports.signup = async (req, res) => {
     }
 
     const user = await User.findOne({ email });
-
     if (user) {
       return res.status(401).json({
         success: false,
         message: "User already exist please login",
+      });
+    }
+
+    const otpResponse = await OTP.find({ email })
+      .sort({ createAt: -1 })
+      .limit(1);
+
+    if (otp !== otpResponse[0].otp) {
+      return res.status(400).json({
+        success: false,
+        message: "Incorrect OTP",
       });
     }
 
@@ -208,6 +228,52 @@ exports.resetPassword = async (req, res) => {
     res.status(500).json({
       success: false,
       message: "Something went wrong while resetting password",
+    });
+  }
+};
+
+exports.sendOtp = async (req, res) => {
+  try {
+    const { email } = req.body;
+
+    const user = await User.findOne({ email });
+    if (user) {
+      return res.status(401).json({
+        success: false,
+        message: "User already registered, please login",
+      });
+    }
+
+    let otp = otpGenrator.generate(6, {
+      upperCaseAlphabets: false,
+      lowerCaseAlphabets: false,
+      specialChars: false,
+    });
+
+    const result = await OTP.findOne({ otp });
+
+    while (result) {
+      otp = otpGenrator.generate(6, {
+        upperCaseAlphabets: false,
+        lowerCaseAlphabets: false,
+        specialChars: false,
+      });
+    }
+
+    await OTP.create({
+      email,
+      otp,
+    });
+
+    res.status(200).json({
+      success: true,
+      message: "OTP send successfully",
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({
+      success: false,
+      message: "Something went wrong sending otp",
     });
   }
 };

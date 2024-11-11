@@ -4,6 +4,7 @@ const initialState = {
   token: localStorage.getItem("token")
     ? JSON.parse(localStorage.getItem("token"))
     : null,
+  signupData: null,
 };
 
 const authSlice = createSlice({
@@ -13,8 +14,11 @@ const authSlice = createSlice({
     setToken(state, action) {
       state.token = action.payload;
     },
+    setSignupData(state, action) {
+      state.signupData = action.payload;
+    },
   },
 });
 
-export const { setToken } = authSlice.actions;
+export const { setToken, setSignupData } = authSlice.actions;
 export default authSlice.reducer;

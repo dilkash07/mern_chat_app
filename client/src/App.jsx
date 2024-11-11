@@ -9,6 +9,7 @@ import Message from "./pages/Message";
 import PrivateRoute from "./components/auth/PrivateRoute";
 import OpenRoute from "./components/auth/OpenRoute";
 import ResetPassword from "./pages/ResetPassword";
+import VerifyEmail from "./pages/VerifyEmail";
 
 function App() {
   return (
@@ -45,6 +46,14 @@ function App() {
           element={
             <OpenRoute>
               <Signup />
+            </OpenRoute>
+          }
+        />
+        <Route
+          path="/verify-email"
+          element={
+            <OpenRoute>
+              <VerifyEmail />
             </OpenRoute>
           }
         />

@@ -4,7 +4,8 @@ import { Link, useNavigate } from "react-router-dom";
 import { AiOutlineEyeInvisible, AiOutlineEye } from "react-icons/ai";
 import { VscAccount } from "react-icons/vsc";
 import { useDispatch } from "react-redux";
-import { signup } from "../services/operations/AuthAPI";
+import { sendOtp } from "../services/operations/AuthAPI";
+import { setSignupData } from "../redux/slice/AuthSlice";
 
 const Signup = () => {
   const dispatch = useDispatch();
@@ -31,7 +32,8 @@ const Signup = () => {
   async function submitHandler(event) {
     event.preventDefault();
 
-    dispatch(signup(formData, navigate));
+    dispatch(setSignupData(formData));
+    dispatch(sendOtp(formData.email, navigate));
 
     // reset form data
     setFormData({
