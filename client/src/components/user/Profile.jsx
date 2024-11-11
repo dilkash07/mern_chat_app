@@ -138,7 +138,7 @@ const Profile = ({ setOpenProfile }) => {
                 value={name}
               />
               <button
-                className="w-20 bg-orange-500 text-md text-white rounded"
+                className="w-20 bg-orange-500 text-md text-orange-500 rounded"
                 onClick={submitNameHandler}
                 onMouseEnter={() => setOnHover(true)}
                 onMouseLeave={() => setOnHover(false)}
@@ -173,7 +173,7 @@ const Profile = ({ setOpenProfile }) => {
                 value={about}
               />
               <button
-                className="w-20 bg-orange-500 text-md text-white rounded"
+                className="w-20 bg-orange-500 text-md text-orange-500 rounded"
                 onClick={submitAboutHandler}
                 onMouseEnter={() => setOnHover(true)}
                 onMouseLeave={() => setOnHover(false)}

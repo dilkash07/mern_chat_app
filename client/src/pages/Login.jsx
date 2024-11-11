@@ -34,81 +34,85 @@ const Login = () => {
   }
 
   return (
-    <div>
-      <div className="my-10">
-        <form
-          className="flex flex-col max-w-[375px] mx-auto p-5 rounded-md gap-y-2 text-sm bg-orange-200 "
-          onSubmit={submitHandler}
-        >
-          <div className="mx-auto py-3">
-            <VscAccount size={50} className="mx-auto " />
-            <h1 className="text-3xl italic font-serif mt-2">Login</h1>
-          </div>
+    <div className="flex justify-center items-center h-screen p-5">
+      <form
+        className="flex flex-col w-[425px] md:max-w-[425px] mx-auto p-6 border rounded-lg gap-y-4 text-sm bg-white shadow-lg"
+        onSubmit={submitHandler}
+      >
+        {/* Icon and Heading */}
+        <div className="mx-auto py-4">
+          <VscAccount size={50} className="mx-auto text-gray-800" />
+          <h1 className="text-3xl italic font-serif mt-2 text-center text-gray-800">
+            Login
+          </h1>
+        </div>
 
-          <label className="w-full">
-            <p className="text-[0.875rem] pl-[2px] mb-1 leading-[1.375rem]">
-              Email Address<sup className="text-red-600">*</sup>
-            </p>
-            <input
-              required
-              type="email"
-              name="email"
-              value={formData.email}
-              placeholder="Enter your email address"
-              onChange={changeHandler}
-              className=" rounded-[8px] w-full pl-3 py-2  border-b outline-none shadow-sm shadow-red-400 focus:shadow-red-600"
-              autoFocus
-            />
-          </label>
+        {/* Email Input */}
+        <label className="w-full">
+          <p className="text-[0.875rem] pl-[2px] mb-1 leading-[1.375rem]">
+            Email Address<sup className="text-red-600">*</sup>
+          </p>
+          <input
+            required
+            type="email"
+            name="email"
+            value={formData.email}
+            placeholder="Enter your email address"
+            onChange={changeHandler}
+            className="rounded-[8px] w-full pl-3 py-2  border border-b-orange-500 focus:border-b-2 outline-none shadow-sm"
+            autoFocus
+          />
+        </label>
 
-          <label className="w-full relative">
-            <p className="text-[0.875rem] pl-[2px] mb-1 leading-[1.375rem]">
-              Password<sup className="text-red-600">*</sup>
+        {/* Password Input */}
+        <label className="w-full relative">
+          <p className="text-[0.875rem] pl-[2px] mb-1 leading-[1.375rem]">
+            Password<sup className="text-red-600">*</sup>
+          </p>
+          <input
+            required
+            type={password ? "text" : "password"}
+            name="password"
+            value={formData.password}
+            placeholder="Enter your password"
+            onChange={changeHandler}
+            className="rounded-[8px] w-full pl-3 py-2  border border-b-orange-500 focus:border-b-2 outline-none shadow-sm"
+          />
+          <span
+            className="absolute right-3 top-[33px] cursor-pointer"
+            onClick={() => showPassword((prev) => !prev)}
+          >
+            {password ? (
+              <AiOutlineEyeInvisible fontSize={24} fill="#656464" />
+            ) : (
+              <AiOutlineEye fontSize={24} fill="#656464" />
+            )}
+          </span>
+          <NavLink to={"/forgot-password"}>
+            <p className="text-sm mt-1 max-w-max ml-auto hover:text-orange-500 hover:underline">
+              Forgot Password
             </p>
-            <input
-              required
-              type={password ? "text" : "password"}
-              name="password"
-              value={formData.password}
-              placeholder="Enter your password"
-              onChange={changeHandler}
-              className=" rounded-[8px] w-full pl-3 py-2  border-b outline-none shadow-sm shadow-red-400 focus:shadow-red-600"
-            />
-            <span
-              className="absolute right-3 top-[33px] cursor-pointer "
-              onClick={() => showPassword((prev) => !prev)}
+          </NavLink>
+        </label>
+
+        {/* Sign In Button */}
+        <button className="bg-orange-500 py-2 px-5 text-lg font-semibold rounded-[8px] mt-6 w-full text-white hover:bg-orange-600 transition-all">
+          Sign In
+        </button>
+
+        {/* Signup Link */}
+        <div className="text-center mt-2">
+          <p>
+            Don't have an account?{" "}
+            <Link
+              to={"/signup"}
+              className="font-medium text-orange-500 hover:text-orange-600 hover:underline"
             >
-              {password ? (
-                <AiOutlineEyeInvisible fontSize={24} fill="#656464" />
-              ) : (
-                <AiOutlineEye fontSize={24} fill="#656464" />
-              )}
-            </span>
-
-            <NavLink to={"/forgot-password"}>
-              <p className=" text-sm mt-1 max-w-max ml-auto mr-[2px] hover:text-red-600 hover:underline">
-                Forgot Password
-              </p>
-            </NavLink>
-          </label>
-          <div>
-            <button className="bg-orange-600 py-2 px-5 text-lg font-semibold rounded-[8px] mt-6 w-full text-white">
-              Sign In
-            </button>
-          </div>
-          <div className=" ml-[2px] mt-1">
-            <p>
-              Don't have Account ?{" "}
-              <Link
-                to={"/signup"}
-                className=" font-medium text-red-500 hover:text-red-600 hover:underline cursor-pointer"
-              >
-                Signup
-              </Link>
-            </p>
-          </div>
-        </form>
-      </div>
+              Signup
+            </Link>
+          </p>
+        </div>
+      </form>
     </div>
   );
 };

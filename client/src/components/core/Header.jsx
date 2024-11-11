@@ -1,11 +1,12 @@
 import React from "react";
+import { BsChatDots } from "react-icons/bs";
 
 const Header = () => {
   return (
-    <div className="px-4 py-1 bg-orange-200">
-      <p className="text-2xl text-orange-600 font-bold">
+    <div className="bg-orange-200 text-orange-600 shadow-md py-1 px-4">
+      <h1 className="text-2xl font-bold">
         Mansuri<span className="text-black">Chat</span>
-      </p>
+      </h1>
     </div>
   );
 };

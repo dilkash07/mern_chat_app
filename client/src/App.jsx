@@ -12,7 +12,7 @@ import ResetPassword from "./pages/ResetPassword";
 
 function App() {
   return (
-    <div className="h-screen flex flex-col bg-white text-black">
+    <div className="h-screen flex flex-col text-black">
       <Header />
       <Routes>
         <Route

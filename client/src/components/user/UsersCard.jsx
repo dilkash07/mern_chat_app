@@ -9,7 +9,7 @@ const UsersCard = ({ user }) => {
     <NavLink
       to={`/message/${user._id}`}
       className={({ isActive }) =>
-        `max-w-screen-md md:w-72 px-2 py-1.5 rounded-md flex gap-2 items-center cursor-default hover:bg-gray-100 ${
+        `md:w-72 px-2 py-1.5 rounded-md flex gap-2 items-center cursor-default hover:bg-gray-100 ${
           isActive && "bg-gray-200 bg-opacity-50"
         }`
       }

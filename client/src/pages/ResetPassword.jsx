@@ -32,93 +32,101 @@ const ResetPassword = () => {
   };
 
   return (
-    <div className="h-screen grid place-items-center">
+    <div className="flex justify-center items-center h-screen p-5">
       {loading ? (
         <div className="spinner"></div>
       ) : (
-        <div className="max-w-[375px] md:border md:shadow flex flex-col items-center p-5 rounded-md">
-          <div className="py-3">
-            <MdLockReset size={70} className="mx-auto" />
-            <h1 className="text-3xl text-center italic font-serif mt-2">
-              Reset your password
+        <form
+          className="flex flex-col w-[425px] md:max-w-[425px] mx-auto p-6 border rounded-lg gap-y-4 text-sm bg-white shadow-lg"
+          onSubmit={handleOnSubmit}
+        >
+          {/* Icon and Heading */}
+          <div className="mx-auto py-4">
+            <MdLockReset size={70} className="mx-auto text-gray-800" />
+            <h1 className="text-3xl italic font-serif mt-2 text-center text-gray-800">
+              Reset Your Password
             </h1>
           </div>
 
-          <p className="my-4 text-sm italic">
+          {/* Message */}
+          <p className="my-4 text-sm italic text-center">
             We’re here to assist you in regaining access to your account. Please
             follow the steps outlined below to reset your password and get back
-            to using our services seamlessly
+            to using our services seamlessly.
           </p>
 
-          <form
-            onSubmit={handleOnSubmit}
-            className="w-full flex flex-col gap-y-2"
-          >
-            <label className="w-full relative">
-              <p className="text-[0.875rem] ml-[2px] mb-1 leading-[1.375rem]">
-                Enter Password<sup className="text-red-600">*</sup>
-              </p>
-              <input
-                required
-                type={showPassword ? "text" : "password"}
-                name="password"
-                value={formData.password}
-                placeholder="Password"
-                onChange={changeHandler}
-                className="rounded-[8px] w-full pl-3 py-2  border border-b-orange-500 focus:border-b-2 outline-none shadow-sm "
-              />
-              <span
-                className="absolute right-3 top-[36px] cursor-pointer z-10"
-                onClick={() => setShowPassword((prev) => !prev)}
-              >
-                {showPassword ? (
-                  <AiOutlineEyeInvisible fontSize={24} fill="#656464" />
-                ) : (
-                  <AiOutlineEye fontSize={24} fill="#656464" />
-                )}
-              </span>
-            </label>
-
-            <label className="w-full relative">
-              <p className="text-[0.875rem] ml-[2px] mb-1 leading-[1.375rem]">
-                Enter Confirm Password<sup className="text-red-600">*</sup>
-              </p>
-              <input
-                required
-                type={showConfirmPassword ? "text" : "password"}
-                name="confirmPassword"
-                value={formData.confirmPassword}
-                placeholder="Confirm Password"
-                onChange={changeHandler}
-                className="rounded-[8px] w-full pl-3 py-2  border border-b-orange-500 focus:border-b-2 outline-none shadow-sm "
-              />
-              <span
-                className="absolute right-3 top-[36px] cursor-pointer z-10"
-                onClick={() => setShowConfirmPassword((prev) => !prev)}
-              >
-                {showConfirmPassword ? (
-                  <AiOutlineEyeInvisible fontSize={24} fill="#656464" />
-                ) : (
-                  <AiOutlineEye fontSize={24} fill="#656464" />
-                )}
-              </span>
-            </label>
-
-            <button
-              type="submit"
-              className="bg-orange-500 py-2 px-5 text-lg font-semibold rounded-[8px] mt-6 w-full text-white "
+          {/* Password Input */}
+          <label className="w-full relative">
+            <p className="text-[0.875rem] mb-1">
+              Enter Password<sup className="text-red-600">*</sup>
+            </p>
+            <input
+              required
+              type={showPassword ? "text" : "password"}
+              name="password"
+              value={formData.password}
+              placeholder="Password"
+              onChange={changeHandler}
+              className="rounded-[8px] w-full pl-3 py-2 border border-b-orange-500 focus:border-b-2 outline-none shadow-sm"
+            />
+            <span
+              className="absolute right-3 top-[32px] cursor-pointer z-10"
+              onClick={() => setShowPassword((prev) => !prev)}
             >
-              Submit
-            </button>
-          </form>
-          <div className="mt-4 mr-auto hover:text-red-600 hover:underline">
-            <Link to="/login">
-              <p className="text-sm font-medium flex items-center gap-x-1">
-                <BiArrowBack /> Back To Login
+              {showPassword ? (
+                <AiOutlineEyeInvisible fontSize={24} fill="#656464" />
+              ) : (
+                <AiOutlineEye fontSize={24} fill="#656464" />
+              )}
+            </span>
+          </label>
+
+          {/* Confirm Password Input */}
+          <label className="w-full relative">
+            <p className="text-[0.875rem] mb-1">
+              Enter Confirm Password<sup className="text-red-600">*</sup>
+            </p>
+            <input
+              required
+              type={showConfirmPassword ? "text" : "password"}
+              name="confirmPassword"
+              value={formData.confirmPassword}
+              placeholder="Confirm Password"
+              onChange={changeHandler}
+              className="rounded-[8px] w-full pl-3 py-2 border border-b-orange-500 focus:border-b-2 outline-none shadow-sm"
+            />
+            <span
+              className="absolute right-3 top-[32px] cursor-pointer z-10"
+              onClick={() => setShowConfirmPassword((prev) => !prev)}
+            >
+              {showConfirmPassword ? (
+                <AiOutlineEyeInvisible fontSize={24} fill="#656464" />
+              ) : (
+                <AiOutlineEye fontSize={24} fill="#656464" />
+              )}
+            </span>
+          </label>
+
+          {/* Submit Button */}
+          <button
+            type="submit"
+            className="bg-orange-500 py-2 px-5 text-lg font-semibold rounded-[8px] mt-6 w-full text-white hover:bg-orange-600 transition-all"
+          >
+            Submit
+          </button>
+
+          {/* Back to Login Link */}
+          <div className="text-center mt-4">
+            <Link
+              to="/login"
+              className="font-medium text-orange-500 hover:text-orange-600 hover:underline"
+            >
+              <p className="text-sm flex items-center justify-center gap-x-1">
+                <BiArrowBack /> Back to Login
               </p>
             </Link>
           </div>
-        </div>
+        </form>
       )}
     </div>
   );

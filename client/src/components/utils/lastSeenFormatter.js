@@ -53,9 +53,6 @@ export const formattedMessageTime = (messageTimestamp) => {
   ) {
     return "yesterday";
   } else {
-    return `${messageDate.toLocaleDateString(
-      [],
-      dateOptions
-    )} ${messageDate.toLocaleTimeString([], timeOptions)}`;
+    return messageDate.toLocaleDateString([], dateOptions);
   }
 };

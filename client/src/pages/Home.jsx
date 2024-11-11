@@ -38,7 +38,7 @@ const Home = () => {
           {basePath ? (
             <div className="h-full flex flex-col justify-center items-center gap-10">
               <div className="grid gap-2 place-items-center">
-                <p className="text-2xl text-orange-600 font-bold">
+                <p className="text-2xl text-orange-500 font-bold">
                   Mansuri<span className="text-black">Chat</span>
                 </p>
                 <div className="text-sm text-gray-600 flex flex-col items-center">
