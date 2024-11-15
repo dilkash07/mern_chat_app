@@ -41,7 +41,7 @@ const VerifyEmail = () => {
       {loading ? (
         <div className="spinner"></div>
       ) : (
-        <div className="w-[450px] md:max-w-[450px] p-6 border rounded-lg shadow-lg bg-white">
+        <div className="w-[450px] md:max-w-[450px] md:p-6 md:border md:shadow-lg md:rounded-lg  bg-white">
           {/* Icon and Heading */}
           <div className="mx-auto py-4">
             <MdOutlineEmail size={70} className="mx-auto text-gray-800" />
@@ -74,7 +74,7 @@ const VerifyEmail = () => {
                   style={{
                     boxShadow: "inset 0px -1px 0px rgba(255, 255, 255, 0.18)",
                   }}
-                  className="w-[48px] md:w-[60px] border-0 bg-orange-100 rounded-md aspect-square text-center focus:outline-orange-500"
+                  className="w-[48px] md:w-[60px] border rounded-md aspect-square text-center focus:outline-orange-500"
                 />
               )}
               containerStyle={{
@@ -106,14 +106,11 @@ const VerifyEmail = () => {
               </Link>
             </div>
 
-            <div className="flex items-center gap-x-1">
-              <RxCountdownTimer size={16} />
-              <OtpTimer
-                initialMinutes={0}
-                initialSeconds={60}
-                onResend={handleResend}
-              />
-            </div>
+            <OtpTimer
+              initialMinutes={0}
+              initialSeconds={30}
+              onResend={handleResend}
+            />
           </div>
         </div>
       )}

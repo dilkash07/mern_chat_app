@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { RxCountdownTimer } from "react-icons/rx";
 
 const OtpTimer = ({ initialMinutes = 0, initialSeconds = 30, onResend }) => {
   const [minutes, setMinutes] = useState(initialMinutes);
@@ -37,23 +38,23 @@ const OtpTimer = ({ initialMinutes = 0, initialSeconds = 30, onResend }) => {
   };
 
   return (
-    <div className="flex items-center gap-2 text-sm">
+    <div className="flex items-center gap-2 text-sm font-medium">
       {/* Countdown Timer */}
       {isActive ? (
-        <span>
-          Resend OTP in:{" "}
-          <span className="font-semibold">
+        <span className="flex gap-x-1 items-center">
+          <RxCountdownTimer /> Resend OTP in:{" "}
+          <span>
             {minutes < 10 ? `0${minutes}` : minutes}:
             {seconds < 10 ? `0${seconds}` : seconds}
           </span>
         </span>
       ) : (
-        <button
-          className="hover:text-orange-500 hover:underline"
+        <p
+          className="text-sm text-orange-500 hover:underline cursor-pointer flex items-center justify-center gap-x-1 "
           onClick={handleResend}
         >
-          Resend OTP
-        </button>
+          <RxCountdownTimer /> Resend OTP
+        </p>
       )}
     </div>
   );

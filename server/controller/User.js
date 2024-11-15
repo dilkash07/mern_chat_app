@@ -1,7 +1,7 @@
 const User = require("../models/User");
 const {
-  removeImageFromCloudinary,
-  uploadImageToCloudinary,
+  uploadFileToCloudinary,
+  removeFileFromCloudinary,
 } = require("../utils/fileUploader");
 
 exports.getUsers = async (req, res) => {
@@ -105,10 +105,10 @@ exports.updateProfilePicture = async (req, res) => {
 
     let profilePic;
     if (user.profilePic.public_id) {
-      await removeImageFromCloudinary(user.profilePic.public_id);
-      profilePic = await uploadImageToCloudinary(imageFile, "MansuriChat/User");
+      await removeFileFromCloudinary(user.profilePic.public_id);
+      profilePic = await uploadFileToCloudinary(imageFile, "MansuriChat/User");
     } else {
-      profilePic = await uploadImageToCloudinary(imageFile, "MansuriChat/User");
+      profilePic = await uploadFileToCloudinary(imageFile, "MansuriChat/User");
     }
 
     user.profilePic.image_url = profilePic.secure_url;

@@ -39,14 +39,14 @@ export function getMessages(receiver, token) {
   };
 }
 
-export function sendMessage(text, receiver, token) {
+export function sendMessage(formData, receiver, token) {
   return async (dispatch) => {
     dispatch(setLoading(true));
     try {
       const response = await apiConnector(
         "Post",
         SEND_MESSAGES_API + receiver,
-        { text },
+        formData,
         {
           Authorization: `Bearer ${token}`,
         }

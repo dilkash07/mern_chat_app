@@ -6,13 +6,9 @@ const messageSchema = new mongoose.Schema(
       type: String,
       default: "",
     },
-    image_url: {
-      type: String,
-      default: "",
-    },
-    video_url: {
-      type: String,
-      default: "",
+    attachment: {
+      type: Object,
+      default: null,
     },
     seen: {
       type: Boolean,

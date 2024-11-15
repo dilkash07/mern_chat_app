@@ -48,7 +48,7 @@ const Signup = () => {
   return (
     <div className="flex justify-center items-center h-screen p-5">
       <form
-        className="flex flex-col w-[425px] md:max-w-[425px] mx-auto p-6 border rounded-lg gap-y-4 text-sm bg-white shadow-lg"
+        className="flex flex-col w-[425px] md:max-w-[425px] mx-auto md:p-6 md:border md:shadow-lg md:rounded-lg gap-y-4 text-sm"
         onSubmit={submitHandler}
       >
         {/* Icon and Heading */}

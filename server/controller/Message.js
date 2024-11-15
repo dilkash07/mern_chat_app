@@ -2,6 +2,7 @@ const Message = require("../models/Message");
 const Conversation = require("../models/Conversation");
 const User = require("../models/User");
 const { io, getReceiverSocket, getCurrentPage } = require("../socket/Socket");
+const { uploadFileToCloudinary } = require("../utils/fileUploader");
 
 exports.sendMessage = async (req, res) => {
   try {
@@ -16,7 +17,29 @@ exports.sendMessage = async (req, res) => {
       seen = true;
     }
 
-    const message = await Message.create({ text, sender, seen });
+    const attachment = req.files && req.files.file ? {} : null;
+
+    if (req.files && req.files.file) {
+      const file = req.files.file;
+
+      try {
+        const uploadResult = await uploadFileToCloudinary(
+          file,
+          "MansuriChat/Attachment"
+        );
+
+        attachment["url"] = uploadResult.secure_url;
+        attachment["public_id"] = uploadResult.public_id;
+      } catch (error) {
+        console.error("File upload error:", error);
+        return res.status(500).json({
+          success: false,
+          message: "Something went wrong while uploading the file",
+        });
+      }
+    }
+
+    const message = await Message.create({ text, attachment, sender, seen });
 
     let conversation = await Conversation.findOne({
       members: { $all: [sender, receiver] },

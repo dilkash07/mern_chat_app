@@ -11,14 +11,15 @@ const SendMessage = () => {
   const dispatch = useDispatch();
   const { token } = useSelector((state) => state.auth);
   const { user } = useSelector((state) => state.user);
-  const [message, setMessage] = useState("");
+  const [text, setText] = useState("");
+  const [file, setFile] = useState(null);
   const [isTyping, setIsTyping] = useState(false);
   const [attach, setAttach] = useState(false);
   const socket = useSocket();
   const { id } = useParams();
 
   const changeHandler = (event) => {
-    setMessage(event.target.value);
+    setText(event.target.value);
 
     setIsTyping(true);
     socket.emit("typing", { id, sender: user._id, isTyping: true });
@@ -35,8 +36,14 @@ const SendMessage = () => {
 
   const submitHandler = (event) => {
     event.preventDefault();
-    dispatch(sendMessage(message, id, token));
-    setMessage("");
+
+    const formData = new FormData();
+    formData.append("text", text);
+    formData.append("file", file);
+
+    dispatch(sendMessage(formData, id, token));
+    setText("");
+    setFile(null);
   };
 
   return (
@@ -46,14 +53,14 @@ const SendMessage = () => {
     >
       <GrAttachment size={20} onClick={() => setAttach((prev) => !prev)} />
 
-      {attach && <Attach />}
+      {attach && <Attach setFile={setFile} />}
 
       <input
         type="text"
         placeholder="Type a message"
         className="w-full outline-none bg-transparent cursor-default"
         onChange={changeHandler}
-        value={message}
+        value={text}
         autoFocus
       />
       <button>
