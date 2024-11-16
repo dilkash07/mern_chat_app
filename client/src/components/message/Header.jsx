@@ -19,7 +19,9 @@ const Header = () => {
             {receiver?.firstName + " " + receiver?.lastName}
           </h1>
           <p className="text-sm text-gray-600">
-            {typing
+            {typing?.find(
+              (typing) => typing.isTyping && typing.sender === receiver?._id
+            )
               ? "typing..."
               : onlineUsers?.includes(receiver?._id)
               ? "Online"

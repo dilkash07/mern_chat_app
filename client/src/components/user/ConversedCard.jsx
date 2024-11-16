@@ -10,6 +10,10 @@ const ConversedCard = ({ convUser }) => {
   const { receiver, typing } = useSelector((state) => state.message);
   const member = convUser.members[0];
 
+  const isTyping = typing.find(
+    (typing) => typing.isTyping && typing.sender === member._id
+  );
+
   return (
     <NavLink
       to={`/message/${member._id}`}
@@ -47,7 +51,7 @@ const ConversedCard = ({ convUser }) => {
         </div>
 
         <div className="max-w-5/6 flex gap-1 justify-between items-center">
-          <div>
+          <div className={`${isTyping && "hidden"}`}>
             <BiCheckDouble
               size={25}
               className={`${
@@ -57,9 +61,12 @@ const ConversedCard = ({ convUser }) => {
               }`}
             />
           </div>
-
           <p className="mr-auto w-11/12 line-clamp-1">
-            {convUser.lastMessage.text}
+            {isTyping ? (
+              <span className="text-orange-500">Typing...</span>
+            ) : (
+              convUser.lastMessage.text
+            )}
           </p>
 
           <div

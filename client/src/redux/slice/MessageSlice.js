@@ -3,7 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
   receiver: null,
   messages: [],
-  typing: false,
+  typing: [],
 };
 
 const messageSlice = createSlice({
@@ -23,11 +23,25 @@ const messageSlice = createSlice({
       state.messages.push(action.payload);
     },
     setTyping(state, action) {
-      state.typing = action.payload;
+      if (
+        !state.typing.find((typing) => typing.sender === action.payload.sender)
+      ) {
+        state.typing.push(action.payload);
+      }
+    },
+    removeTyping(state, action) {
+      state.typing = state.typing.filter(
+        (typing) => typing.sender !== action.payload.sender
+      );
     },
   },
 });
 
-export const { setReceiver, setMessages, setNewMessage, setTyping } =
-  messageSlice.actions;
+export const {
+  setReceiver,
+  setMessages,
+  setNewMessage,
+  setTyping,
+  removeTyping,
+} = messageSlice.actions;
 export default messageSlice.reducer;

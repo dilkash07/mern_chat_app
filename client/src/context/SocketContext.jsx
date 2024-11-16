@@ -6,6 +6,7 @@ import {
   setMessages,
   setNewMessage,
   setTyping,
+  removeTyping,
 } from "../redux/slice/MessageSlice";
 import { playNotification } from "../components/utils/audioPlayer";
 import notificationSound from "../assets/notification.mp3";
@@ -44,7 +45,11 @@ export const SocketProvider = ({ children }) => {
       });
 
       socket.on("isTyping", (data) => {
-        dispatch(setTyping(data));
+        if (data.isTyping) {
+          dispatch(setTyping(data));
+        } else {
+          dispatch(removeTyping(data));
+        }
       });
 
       return () => {

@@ -35,10 +35,9 @@ io.on("connection", (socket) => {
 
   socket.on("typing", ({ id, sender, isTyping }) => {
     const receiver = users[id];
-    const receiverCurrentPage = currentPage[id];
 
-    if (receiver && receiverCurrentPage === sender) {
-      io.to(receiver).emit("isTyping", isTyping);
+    if (receiver) {
+      io.to(receiver).emit("isTyping", { sender, isTyping });
     }
   });
 
