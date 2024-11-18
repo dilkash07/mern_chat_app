@@ -1,4 +1,4 @@
-const baseUrl = "http://localhost:4000/api/v1";
+const baseUrl = "https://mansurichat.onrender.com/api/v1";
 
 // AUTH ENDPOINTS
 export const endPoints = {
