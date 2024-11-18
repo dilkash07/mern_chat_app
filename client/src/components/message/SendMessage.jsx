@@ -53,11 +53,13 @@ const SendMessage = () => {
     >
       <GrAttachment size={20} onClick={() => setAttach((prev) => !prev)} />
 
-      {attach && <Attach setFile={setFile} />}
+      {attach && <Attach setFile={setFile} setAttach={setAttach} />}
 
       <input
         type="text"
-        placeholder="Type a message"
+        placeholder={`${
+          file === null ? "Type a message" : "Caption (otional)"
+        }`}
         className="w-full outline-none bg-transparent cursor-default"
         onChange={changeHandler}
         value={text}
