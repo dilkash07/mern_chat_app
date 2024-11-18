@@ -24,6 +24,8 @@ app.use(
   })
 );
 
+console.log(process.env.CLIENT_URL);
+
 app.use(
   fileUpload({
     useTempFiles: true,
