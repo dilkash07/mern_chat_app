@@ -7,6 +7,8 @@ const bodyParser = require("body-parser");
 const cors = require("cors");
 const fileUpload = require("express-fileupload");
 const { app, server } = require("./socket/Socket");
+const path = require("path");
+const _dirname = path.resolve();
 
 const authRoutes = require("./router/Auth");
 const userRoutes = require("./router/User");
@@ -35,6 +37,11 @@ app.use("/api/v1/message", messageRoutes);
 
 database.connect();
 cloudinary.connect();
+
+app.use(express.static(path.join(_dirname, "/client/dist")));
+app.get("*", (req, res) => {
+  res.sendFile(path.resolve(_dirname, "client", "dist", "index.html"));
+});
 
 const port = process.env.PORT || 3000;
 
