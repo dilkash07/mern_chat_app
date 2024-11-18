@@ -4,7 +4,6 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-
     "dev": "nodemon server/index.js",
     "build": "npm install && npm install --prefix client && npm run build --prefix client",
     "start": "nodemon server/index.js"
@@ -25,7 +24,7 @@
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.7.2",
     "nodemailer": "^6.9.16",
-    "nodemon": "^3.1.7",
+    "nodemon": "^3.1.2",
     "otp-generator": "^4.0.1",
     "socket.io": "^4.8.1"
   }
